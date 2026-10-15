@@ -8,20 +8,21 @@ state::Plate::Plate(bool n, bool e, bool s, bool w): North(n), East(e), South(s)
 
 }
 
+/**
+ * Turns the plate 90° right.
+ */
 void state::Plate::turnPlate() {
     bool temp= North;
     North= West;
     West= South;
     South= East;
     East= temp;
-    if (rotation ==3){
-    rotation=0;}
-    else {
-        rotation+=1;
-    }
+    rotation= (rotation + 1)%4;
 };
 
-
+/**
+ * Displays the plate with beautiful UNICODE Symbol.
+ */
 void state::Plate::showPlate()
 {
     const char* symbol = " ";
