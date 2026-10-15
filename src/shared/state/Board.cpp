@@ -77,17 +77,26 @@ void state::Board::createPlayground() {
     masterplate = std::make_unique<state::T>();
 }
 
+// Returns every cell reachable from (i, j), start cell included.
+// Cells are ordered from the nearest to the farthest (BFS order).
+// i = row, j = column. Returns an empty vector if the start is invalid.
 std::vector<std::array<int, 2>> state::Board::searchPath (int i, int j)
 {
     std::vector<std::array<int, 2>> reachable;
- 
+
+    // Start is outside the board: nothing to explore
     if (i < 0 || i >= 7 || j < 0 || j >= 7) return reachable;
- 
+
+    // No plate on the start cell: nothing to explore
     if (!playground[i][j]) return reachable;
- 
+
+    // Directions: 0 = North, 1 = East, 2 = South, 3 = West
+    // The opposite of dir is (dir + 2) % 4
     const int di[4] = { -1, 0, 1, 0 };
     const int dj[4] = { 0, 1, 0, -1 };
- 
+
+    // Does the plate at (a, b) have an opening in direction dir?
+    // A cell without a plate counts as closed.
     auto isOpen = [this](int a, int b, int dir) {
         const std::unique_ptr<Plate>& plate = playground[a][b];
         if (!plate) return false;
@@ -99,28 +108,32 @@ std::vector<std::array<int, 2>> state::Board::searchPath (int i, int j)
         default: return false;
         }
     };
- 
-    bool visited[7][7] = {};               
-    std::queue<std::array<int, 2>> file;   
- 
+
+    bool visited[7][7] = {};               // cells already discovered
+    std::queue<std::array<int, 2>> file;   // discovered cells waiting to be explored
+
+    // Start from (i, j)
     visited[i][j] = true;
     file.push({ i, j });
- 
+
     while (!file.empty()) {
-        std::array<int, 2> courante = file.front();   
-        file.pop();                                   
-        reachable.push_back(courante);                
- 
-        for (int dir = 0; dir < 4; ++dir) {           
+        // Take the oldest cell in the queue
+        std::array<int, 2> courante = file.front();
+        file.pop();
+        reachable.push_back(courante);     // it is reachable
+
+        // Look at the 4 neighbours
+        for (int dir = 0; dir < 4; ++dir) {
             int ni = courante[0] + di[dir];
             int nj = courante[1] + dj[dir];
- 
-            if (ni < 0 || ni >= 7 || nj < 0 || nj >= 7) continue;   
-            if (visited[ni][nj]) continue;                          
- 
+
+            if (ni < 0 || ni >= 7 || nj < 0 || nj >= 7) continue;   // off the board
+            if (visited[ni][nj]) continue;                          // already seen
+
+            // Passage exists only if both plates open toward each other
             if (isOpen(courante[0], courante[1], dir) &&
                 isOpen(ni, nj, (dir + 2) % 4)) {
-                visited[ni][nj] = true;     
+                visited[ni][nj] = true;    // mark when discovered, not when popped
                 file.push({ ni, nj });
             }
         }
