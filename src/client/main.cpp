@@ -15,19 +15,37 @@ using namespace state;
 
 int main()
 {
-    Plate plate= L();
-    plate.turnPlate();
-    plate.showPlate();
-    plate.turnPlate();
-    plate.showPlate();
-    Plate plate2= T();
-    plate2.showPlate();
-    Plate plate3= I();
-    plate3.showPlate();
-    plate3.turnPlate();
-    plate3.showPlate();
+    Board board;
+    board.createPlayground();
+    board.showBoard();
+    printf("\n");
 
-    cout << "It does not work !" << endl;
+    board.insertPlate(0,5);
+    board.turnMasterPlate();
+    board.insertPlate(0,5);
+    board.showBoard();
+    printf("\n");
+
+    board.turnMasterPlate();
+    board.insertPlate(6,3);
+    board.showBoard();
+    printf("\n");
+
+    board.turnMasterPlate();
+    board.insertPlate(2,0);
+    board.showBoard();
+    printf("\n");
+
+    board.turnMasterPlate();
+    board.insertPlate(3,6);
+    board.showBoard();
+    vector<array<int, 2>> atteignables = board.searchPath(1, 4);
+    cout << "Cases atteignables depuis (1,4) : ";
+    for (const auto& c : atteignables) {
+        cout << "(" << c[0] << "," << c[1] << ") ";
+    }
+    cout << endl;
+    cout << "It just works ! " << endl;
 
     return 0;
 }

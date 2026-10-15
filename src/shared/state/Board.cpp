@@ -9,6 +9,8 @@
 
 #include <iostream>
 #include <memory>
+#include <queue>
+#include <array>
 
 state::Board::Board(): playground{}, masterplate{} {
 }
