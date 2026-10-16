@@ -16,29 +16,9 @@ using namespace state;
 int main()
 {
     Board board;
+    Player joueur;
     board.createPlayground();
-    board.showBoard();
-    printf("\n");
 
-    board.insertPlate(0,5);
-    board.turnMasterPlate();
-    board.insertPlate(0,5);
-    board.showBoard();
-    printf("\n");
-
-    board.turnMasterPlate();
-    board.insertPlate(6,3);
-    board.showBoard();
-    printf("\n");
-
-    board.turnMasterPlate();
-    board.insertPlate(2,0);
-    board.showBoard();
-    printf("\n");
-
-    board.turnMasterPlate();
-    board.insertPlate(3,6);
-    board.showBoard();
     vector<array<int, 2>> atteignables = board.searchPath(1, 4);
     vector<array<int, 2>> atteignables2 = board.searchPath(2, 0);
     cout << "Cases atteignables depuis (1,4) : ";
