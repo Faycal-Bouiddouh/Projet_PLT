@@ -13,3 +13,10 @@ void state::Player::move(int i, int j) {
 void state::Player::obtainTreasure(State *state) {
     treasure_index+=1;
 }
+
+state::Player::Player(int i, int j) {
+    position[0]=i;
+    position[1]=j;
+    starting_position[0]=i;
+    starting_position[1]=j;
+}
