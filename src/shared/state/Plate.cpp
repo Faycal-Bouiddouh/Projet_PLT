@@ -1,6 +1,6 @@
 //
 // Created by tompi on 08/10/2026.
-//
+//ybyh
 
 #include "Plate.h"
 #include <iostream>
@@ -20,7 +20,6 @@ void state::Plate::turnPlate() {
         rotation+=1;
     }
 };
-
 
 bool state::Plate::getNorth() const {
     return North;

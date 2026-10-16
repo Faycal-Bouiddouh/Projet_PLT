@@ -20,13 +20,17 @@ int main()
     board.createPlayground();
 
     vector<array<int, 2>> atteignables = board.searchPath(1, 4);
+    vector<array<int, 2>> atteignables2 = board.searchPath(2, 0);
     cout << "Cases atteignables depuis (1,4) : ";
     for (const auto& c : atteignables) {
         cout << "(" << c[0] << "," << c[1] << ") ";
     }
     cout << endl;
-    
-
+    cout << "Cases atteignables depuis (2,0) : ";
+    for (const auto& c : atteignables2) {
+        cout << "(" << c[0] << "," << c[1] << ") ";
+    }
+    cout << endl;
     cout << "It just works ! " << endl;
 
     return 0;
