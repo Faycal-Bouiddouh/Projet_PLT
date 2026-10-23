@@ -14,11 +14,7 @@ void state::Plate::turnPlate() {
     West= South;
     South= East;
     East= temp;
-    if (rotation ==3){
-    rotation=0;}
-    else {
-        rotation+=1;
-    }
+    rotation= (rotation+1)%4;
 };
 
 bool state::Plate::getNorth() const {
