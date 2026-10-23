@@ -17,19 +17,14 @@ void client::Game::run() {
     board.createPlayground();
     std::array<Player, 2> &players=state.getPlayers();
     string s;
-    string pos0;
-    string pos1;
     std::array<int, 2> mov;
     while (true) {
         board.showBoard();
         std::array<int, 2> position=players[0].getPosition();
         cout<<"insert piece where? (write (x,y))";
         cin>>s;
-        pos0=s[1];
-        pos1=s[3];
-        mov[0]=stoi(pos0);
-        mov[1]=stoi(pos1);
-        cout<<mov[0]<<mov[1]<<endl;
+        mov[0] = s[1] - '0';
+        mov[1] = s[3] - '0';
         board.insertPlate(mov[0],mov[1]);
         vector<array<int, 2>> atteignables = board.searchPath(position[0],position[1]);
         board.showBoard();
@@ -40,10 +35,8 @@ void client::Game::run() {
         }
         cout<<"move to? (write (x,y))";
         cin>>s;
-        pos0=s[1];
-        pos1=s[3];
-        mov[0]=stoi(pos0);
-        mov[1]=stoi(pos1);
+        mov[0] = s[1] - '0';
+        mov[1] = s[3] - '0';
         if (state.verifyMovementValidity(mov[0],mov[1],atteignables)) {
             players[0].move(mov[0],mov[1]);
         }
