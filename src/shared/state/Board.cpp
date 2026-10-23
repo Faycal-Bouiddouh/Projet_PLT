@@ -11,46 +11,68 @@
 #include <memory>
 #include <queue>
 #include <array>
+#include <algorithm>
+#include <utility>
 
 state::Board::Board(): playground{}, masterplate{} {
+
+}
+
+
+bool state::Board::verifyInsertValidity(int i, int j) {
+     int legal_inserts[12][2] = {
+        {0, 1}, {0, 3}, {0, 5},
+        {6, 1}, {6, 3}, {6, 5},
+        {1, 0}, {3, 0}, {5, 0},
+        {1, 6}, {3, 6}, {5, 6}
+    };
+
+    for ( auto& pos : legal_inserts) {
+        if (pos[0] == i && pos[1] == j) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void state::Board::insertPlate(int i, int j) {
-    auto tempPlate = std::move(masterplate);
-    switch (i) {
-        case 0:
-            masterplate = std::move(playground[6][j]);
-            for (int l = 6; l > 0; --l) {
-                playground[l][j] = std::move(playground[l - 1][j]);
-            }
-            playground[0][j] = std::move(tempPlate);
-            break;
+    if (verifyInsertValidity(i,j)) {
+        auto tempPlate = std::move(masterplate);
+        switch (i) {
+            case 0:
+                masterplate = std::move(playground[6][j]);
+                for (int l = 6; l > 0; --l) {
+                    playground[l][j] = std::move(playground[l - 1][j]);
+                }
+                playground[0][j] = std::move(tempPlate);
+                return;
 
-        case 6:
-            masterplate = std::move(playground[0][j]);
-            for (int l = 0;  l<6 ; l++) {
-                playground[l][j] = std::move(playground[l + 1][j]);
-            }
-            playground[6][j]=std::move(tempPlate);
-            break;
-    }
+            case 6:
+                masterplate = std::move(playground[0][j]);
+                for (int l = 0;  l<6 ; l++) {
+                    playground[l][j] = std::move(playground[l + 1][j]);
+                }
+                playground[6][j]=std::move(tempPlate);
+                return;
+        }
 
-    switch (j) {
-        case 0:
-            masterplate = std::move(playground[i][6]);
-            for (int l = 6;  l>0 ; l--) {
-                playground[i][l] = std::move(playground[i][l-1]);
-            }
-            playground[i][0]=std::move(tempPlate);
-            break;
+        switch (j) {
+            case 0:
+                masterplate = std::move(playground[i][6]);
+                for (int l = 6;  l>0 ; l--) {
+                    playground[i][l] = std::move(playground[i][l-1]);
+                }
+                playground[i][0]=std::move(tempPlate);
+                return;
 
-        case 6:
-            masterplate = std::move(playground[i][0]);
-            for (int l = 0;  l<6 ; l++) {
-                playground[i][l] = std::move(playground[i][l+1]);
-            }
-            playground[i][6]=std::move(tempPlate);
-            break;
+            case 6:
+                masterplate = std::move(playground[i][0]);
+                for (int l = 0;  l<6 ; l++) {
+                    playground[i][l] = std::move(playground[i][l+1]);
+                }
+                playground[i][6]=std::move(tempPlate);
+                return;
+        }
     }
 }
 

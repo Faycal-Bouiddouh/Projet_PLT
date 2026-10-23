@@ -10,6 +10,10 @@ void state::Player::move(int i, int j) {
     position[1]=j;
 }
 
+std::array<int, 2>  state::Player::getPosition () {
+    return position;
+}
+
 void state::Player::obtainTreasure(State *state) {
     treasure_index+=1;
 }
