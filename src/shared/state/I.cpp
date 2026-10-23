@@ -3,6 +3,9 @@
 //
 #include "I.h"
 
+/**
+ * Defines the I-plate with 2 opposed openings, oriented like a 'I'.
+ */
 state::I::I() : state::Plate(true, false, true, false)
 {
 }
