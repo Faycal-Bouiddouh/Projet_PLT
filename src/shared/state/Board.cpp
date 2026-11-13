@@ -13,6 +13,8 @@
 #include <array>
 #include <algorithm>
 #include <utility>
+#include <random>
+#include <vector>
 
 state::Board::Board(): playground{}, masterplate{} {
 
@@ -83,59 +85,150 @@ void state::Board::turnMasterPlate(){
 }
 
 void state::Board::showBoard(
-    const std::vector<std::array<int, 2>>& reachable,
-    const std::vector<std::array<int, 2>>& playerPositions)
+    const std::vector<std::array<int, 2>> &reachable,
+    const std::vector<std::array<int, 2>> &playerPositions,
+    Treasure expected)
 {
-    const char* const RESET = "\033[0m";
-    const char* const YELLOW = "\033[1;33m";
-
-    const char* const PLAYER_COLORS[2] = {
-        "\033[1;37;42m", // White text, green background
-        "\033[1;37;41m"  // White text, red background
+    const char *reset = "\033[0m";
+    const char *reachableColor = "\033[1;33m";
+    const char *treasureColor = "\033[1;30;105m";
+    const std::array<const char*, 4> playerColors = {
+        "\033[1;37;42m", "\033[1;37;41m",
+        "\033[1;37;44m", "\033[1;37;46m"
     };
 
-    for (int i = 0; i < 7; ++i) {
-        for (int j = 0; j < 7; ++j) {
-            const char* couleur = RESET;
+    auto drawTile = [reset, treasureColor](
+        Plate *plate, int id, const char *color)
+    {
+        std::cout << color;
+        if (plate) {
+            plate->showPlate();
+        } else {
+            std::cout << "?";
+        }
 
-            // Highlight reachable cells
-            for (const auto& c : reachable) {
-                if (c[0] == i && c[1] == j) {
-                    couleur = YELLOW;
+        if (id != 0) {
+            std::cout << treasureColor
+                      << (id < 10 ? "0" : "") << id;
+        } else {
+            std::cout << "  ";
+        }
+        std::cout << reset;
+    };
+
+    std::cout << "\n     ";
+    for (int j = 0; j < 7; ++j) {
+        std::cout << j << "   ";
+    }
+    std::cout << '\n';
+
+    for (int i = 0; i < 7; ++i) {
+        std::cout << " " << i << "  ";
+        for (int j = 0; j < 7; ++j) {
+            const std::array<int, 2> position = {i, j};
+            Plate *plate = playground[i][j].get();
+            bool isReachable =
+                std::find(reachable.begin(), reachable.end(), position) !=
+                reachable.end();
+
+            int id = 0;
+            const char *color = isReachable ? reachableColor : reset;
+
+            // Display only the current objective
+            if (expected != Treasure::NONE &&
+                plate && plate->hasTreasure(expected)) {
+                id = static_cast<int>(expected);
+                color = treasureColor;
+            }
+
+            /*
+            // Uncomment this block to display every treasure
+            for (int value = 1;
+                 value <= static_cast<int>(Treasure::GEM); ++value) {
+                if (plate && plate->hasTreasure(
+                                 static_cast<Treasure>(value))) {
+                    id = value;
+                    color = treasureColor;
+                    break;
+                }
+            }
+            */
+
+            // Keep the player visible; the objective number stays pink
+            for (std::size_t k = 0;
+                 k < playerPositions.size() && k < playerColors.size(); ++k) {
+                if (playerPositions[k] == position) {
+                    color = playerColors[k];
                     break;
                 }
             }
 
-            // Player colors take priority
-            for (std::size_t k = 0; k < playerPositions.size(); ++k) {
-                if (playerPositions[k][0] == i &&
-                    playerPositions[k][1] == j) {
-                    couleur = PLAYER_COLORS[k % 2];
-                }
-            }
-
-            std::cout << couleur;
-
-            if (playground[i][j]) {
-                playground[i][j]->showPlate();
-            } else {
-                std::cout << '?';
-            }
-
-            std::cout << RESET;
+            drawTile(plate, id, color);
+            std::cout << ' ';
         }
-
         std::cout << '\n';
     }
+
+    if (expected != Treasure::NONE) {
+        std::cout << treasureColor << " Tresor recherche " << reset << "  ";
+    }
+    std::cout << reachableColor << " Case atteignable " << reset << '\n';
+
+    for (std::size_t k = 0;
+         k < playerPositions.size() && k < playerColors.size(); ++k) {
+        std::cout << playerColors[k] << " Joueur " << k + 1 << " "
+                  << reset << "  ";
+    }
+    std::cout << '\n';
 }
 
 void state::Board::createPlayground() {
+    // Create the board tiles
     for (auto& row : playground) {
         for (auto& plate : row) {
             plate = std::make_unique<state::L>();
         }
     }
+
     masterplate = std::make_unique<state::T>();
+
+    // Collect positions outside the four starting corners
+    std::vector<std::array<int, 2>> treasurePositions;
+
+    for (int i = 0; i < 7; ++i) {
+        for (int j = 0; j < 7; ++j) {
+            playground[i][j]->setTreasure(state::Treasure::NONE);
+
+            bool isCorner =
+                (i == 0 || i == 6) && (j == 0 || j == 6);
+
+            if (!isCorner) {
+                treasurePositions.push_back({i, j});
+            }
+        }
+    }
+
+    masterplate->setTreasure(state::Treasure::NONE);
+
+    // Shuffle the available positions
+    std::mt19937 generator(std::random_device{}());
+
+    std::shuffle(
+        treasurePositions.begin(),
+        treasurePositions.end(),
+        generator
+    );
+
+    // Place each of the twenty-four treasures once
+    for (int id = 1;
+         id <= static_cast<int>(state::Treasure::GEM);
+         ++id) {
+        const auto& position = treasurePositions[id - 1];
+
+        playground[position[0]][position[1]]->setTreasure(
+            static_cast<state::Treasure>(id)
+        );
+    }
 }
 
 std::vector<std::array<int, 2>> state::Board::searchPath (int i, int j)
@@ -187,4 +280,18 @@ std::vector<std::array<int, 2>> state::Board::searchPath (int i, int j)
         }
     }
     return reachable;
+}
+
+bool state::Board::hasTreasureAt(
+    int i, int j, state::Treasure expected) const
+{
+    if (i < 0 || i >= 7 || j < 0 || j >= 7) {
+        return false;
+    }
+
+    if (!playground[i][j]) {
+        return false;
+    }
+
+    return playground[i][j]->hasTreasure(expected);
 }

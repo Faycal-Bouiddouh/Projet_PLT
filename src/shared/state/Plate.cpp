@@ -70,3 +70,11 @@ void state::Plate::showPlate()
 
     std::cout << symbol;
 }
+
+bool state::Plate::hasTreasure(state::Treasure expected) const {
+    return expected != Treasure::NONE && treasure == expected;
+}
+
+void state::Plate::setTreasure(state::Treasure value) {
+    treasure = value;
+}
