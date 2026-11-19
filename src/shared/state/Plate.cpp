@@ -71,10 +71,50 @@ void state::Plate::showPlate()
     std::cout << symbol;
 }
 
-bool state::Plate::hasTreasure(state::Treasure expected) const {
+
+std::string state::Plate::getPlateSymbolFromAcesses () const {
+    std::string symbol;
+
+    if (North && South && East) {
+        symbol = "├";
+    }
+    else if (North && South && West) {
+        symbol = "┤";
+    }
+    else if (East && South && West) {
+        symbol = "┬";
+    }
+    else if (North && East && West) {
+        symbol = "┴";
+    }
+    else if (North && East) {
+        symbol = "└";
+    }
+    else if (North && West) {
+        symbol = "┘";
+    }
+    else if (South && East) {
+        symbol = "┌";
+    }
+    else if (South && West) {
+        symbol = "┐";
+    }
+    else if (North && South) {
+        symbol = "I";
+    }
+    else if (East && West) {
+        symbol = "-";
+    }
+
+    //std::cout << symbol;
+
+    return symbol;
+}
+
+bool state::Plate::hasTreasure(Treasure expected) const {
     return expected != Treasure::NONE && treasure == expected;
 }
 
-void state::Plate::setTreasure(state::Treasure value) {
+void state::Plate::setTreasure(Treasure value) {
     treasure = value;
 }
