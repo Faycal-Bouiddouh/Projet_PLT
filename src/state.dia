@@ -147,16 +147,16 @@
         <dia:point val="-22.9702,-9.35361"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="-23.0202,-9.40361;8.45982,15.4964"/>
+        <dia:rectangle val="-23.0202,-9.40361;7.9773,11.4964"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
         <dia:point val="-22.9702,-9.35361"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
-        <dia:real val="31.380000000000003"/>
+        <dia:real val="30.897500000000001"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
-        <dia:real val="24.800000000000001"/>
+        <dia:real val="20.800000000000001"/>
       </dia:attribute>
       <dia:attribute name="name">
         <dia:string>#Board#</dia:string>
@@ -586,7 +586,7 @@ std::array&lt;std::unique_ptr&lt;Plate&gt;, 7&gt;, 7
         </dia:composite>
         <dia:composite type="umloperation">
           <dia:attribute name="name">
-            <dia:string>#showBoard#</dia:string>
+            <dia:string>#display#</dia:string>
           </dia:attribute>
           <dia:attribute name="stereotype">
             <dia:string>##</dia:string>
@@ -831,101 +831,6 @@ std::array&lt;std::unique_ptr&lt;Plate&gt;, 7&gt;, 7
               </dia:attribute>
               <dia:attribute name="type">
                 <dia:string>#std::string#</dia:string>
-              </dia:attribute>
-              <dia:attribute name="value">
-                <dia:string>##</dia:string>
-              </dia:attribute>
-              <dia:attribute name="comment">
-                <dia:string>##</dia:string>
-              </dia:attribute>
-              <dia:attribute name="kind">
-                <dia:enum val="0"/>
-              </dia:attribute>
-            </dia:composite>
-          </dia:attribute>
-        </dia:composite>
-        <dia:composite type="umloperation">
-          <dia:attribute name="name">
-            <dia:string>#display#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="stereotype">
-            <dia:string>##</dia:string>
-          </dia:attribute>
-          <dia:attribute name="type">
-            <dia:string>#void#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="visibility">
-            <dia:enum val="0"/>
-          </dia:attribute>
-          <dia:attribute name="comment">
-            <dia:string>##</dia:string>
-          </dia:attribute>
-          <dia:attribute name="abstract">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="inheritance_type">
-            <dia:enum val="2"/>
-          </dia:attribute>
-          <dia:attribute name="query">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="class_scope">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="parameters"/>
-        </dia:composite>
-        <dia:composite type="umloperation">
-          <dia:attribute name="name">
-            <dia:string>#display#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="stereotype">
-            <dia:string>##</dia:string>
-          </dia:attribute>
-          <dia:attribute name="type">
-            <dia:string>#void#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="visibility">
-            <dia:enum val="0"/>
-          </dia:attribute>
-          <dia:attribute name="comment">
-            <dia:string>##</dia:string>
-          </dia:attribute>
-          <dia:attribute name="abstract">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="inheritance_type">
-            <dia:enum val="2"/>
-          </dia:attribute>
-          <dia:attribute name="query">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="class_scope">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="parameters">
-            <dia:composite type="umlparameter">
-              <dia:attribute name="name">
-                <dia:string>#reachable#</dia:string>
-              </dia:attribute>
-              <dia:attribute name="type">
-                <dia:string>#const std::vector&lt;std::array&lt;int, 2&gt;&gt;&amp;#</dia:string>
-              </dia:attribute>
-              <dia:attribute name="value">
-                <dia:string>##</dia:string>
-              </dia:attribute>
-              <dia:attribute name="comment">
-                <dia:string>##</dia:string>
-              </dia:attribute>
-              <dia:attribute name="kind">
-                <dia:enum val="0"/>
-              </dia:attribute>
-            </dia:composite>
-            <dia:composite type="umlparameter">
-              <dia:attribute name="name">
-                <dia:string>#playerPositions#</dia:string>
-              </dia:attribute>
-              <dia:attribute name="type">
-                <dia:string>#const std::vector&lt;std::array&lt;int, 2&gt;&gt;&amp;#</dia:string>
               </dia:attribute>
               <dia:attribute name="value">
                 <dia:string>##</dia:string>
@@ -4085,16 +3990,16 @@ std::array&lt;std::unique_ptr&lt;Plate&gt;, 7&gt;, 7
     </dia:object>
     <dia:object type="UML - Dependency" version="1" id="O16">
       <dia:attribute name="obj_pos">
-        <dia:point val="8.40982,-8.65361"/>
+        <dia:point val="7.9273,-8.65361"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="8.35982,-9.41361;57.8092,13.5478"/>
+        <dia:rectangle val="7.8773,-9.41361;57.8092,13.5478"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="8.40982,-8.65361"/>
+        <dia:point val="7.9273,-8.65361"/>
         <dia:point val="57.3592,-8.65361"/>
         <dia:point val="57.3592,13.0978"/>
       </dia:attribute>
@@ -4137,16 +4042,16 @@ std::array&lt;std::unique_ptr&lt;Plate&gt;, 7&gt;, 7
     </dia:object>
     <dia:object type="UML - Dependency" version="1" id="O17">
       <dia:attribute name="obj_pos">
-        <dia:point val="8.40982,8.84639"/>
+        <dia:point val="8.4098,8.84639"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="8.35982,8.79639;21.6376,11.4868"/>
+        <dia:rectangle val="8.3598,8.79639;21.6376,11.3773"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="8.40982,8.84639"/>
+        <dia:point val="8.4098,8.84639"/>
         <dia:point val="14.5987,8.84639"/>
         <dia:point val="14.5987,10.9273"/>
         <dia:point val="21.1876,10.9273"/>
@@ -4184,7 +4089,6 @@ std::array&lt;std::unique_ptr&lt;Plate&gt;, 7&gt;, 7
         <dia:color val="#000000ff"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O1" connection="35"/>
         <dia:connection handle="1" to="O2" connection="16"/>
       </dia:connections>
       <dia:childnode parent="O0"/>

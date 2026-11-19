@@ -90,7 +90,7 @@ void state::Board::turnMasterPlate(){
 }
 
 
-void state::Board::display(
+/*void state::Board::display(
     const std::vector<std::array<int, 2>>& reachable,
     const std::vector<std::array<int, 2>>& playerPositions)
 {
@@ -135,9 +135,9 @@ void state::Board::display(
 
         std::cout << '\n';
     }
-}
+}*/
 
-void state::Board::showBoard(
+void state::Board::display(
     const std::vector<std::array<int, 2>>& reachable,
     const std::vector<std::array<int, 2>>& playerPositions,
     Treasure expected)
