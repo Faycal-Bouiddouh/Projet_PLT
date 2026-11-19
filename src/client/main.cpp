@@ -24,7 +24,7 @@ int main()
     GameWithRender game;
     game.run();
 
-    //Morceau de code de Mohammed
+    //Morceau de code de Mogit pushammed
     Board board;
     Player joueur;
     //board.createPlayground();
