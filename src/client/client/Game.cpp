@@ -20,7 +20,6 @@ void client::Game::run() {
 
     int PlayerTurn = 0;
     Board &board = state.getBoard();
-    board.shuffle();
     std::array<Player, 2> &players=state.getPlayers();
     players[1].move(6,6);
     string s;
