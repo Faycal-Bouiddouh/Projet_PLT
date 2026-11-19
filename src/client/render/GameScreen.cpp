@@ -218,6 +218,50 @@ void GameScreen::drawablesUpdate() {
     cd.is_background = false;
     list_complete_sprites.push_back(std::move(cd));
 
+    //Joueurs respectifs [leurs pions (offset exprès) et leurs noms] - CETTE FONCTION SERA À MODIFIER !!!!
+    /*
+    std::array<state::Player, 2> players = gamecore.getPlayers(); //allège code
+    for(int i = 0; i < players.size(); i++) { //cette ligne sera à modif
+        // Le pion
+        cd.respective_texture =std::make_unique<sf::Texture>("../assets/player" + std::to_string(i) + ".png");
+        cd.sprite = std::make_unique<sf::Sprite>(sf::Sprite(*cd.respective_texture)); //0, 0, 800, 600
+        cd.sprite->setPosition(sf::Vector2f(convert_PlaygroundPosition_To_SpritePosition(
+            players[i].getPosition()[0],players[i].getPosition()[1]))); //Pareil que masterplate_graybox (un code plus propre l'aurait cherché puis appliqué)
+        cd.sprite->setScale(sf::Vector2f(1.f, 1.f));
+        cd.is_background = false;
+        list_complete_sprites.push_back(std::move(cd));
+
+
+        // Le joueur peut faire des actions si c'est celui demandé
+        if(gamecore.is_i_PlayerTurn(i)) {
+            //Joueur en cours
+            sf::Text turn_text = sf::Text(ArialFont::font, std::string("Player" + std::to_string(i)), 20);
+            turn_text.setFillColor(sf::Color::White);
+            turn_text.setPosition({575.f, 80.f});
+            cdt.text = std::make_unique<sf::Text>(turn_text);
+            list_complete_texts.push_back(std::move(cdt));
+
+            //Le nombre de trésors restant
+            sf::Text counter_text = sf::Text(ArialFont::font, std::string("Reste :" + std::to_string(gamecore.getPlayers()[i].getTreasureIndex())), 25);
+            counter_text.setFillColor(sf::Color::White);
+            counter_text.setPosition({700.f, 425.f});
+            cdt.text = std::make_unique<sf::Text>(counter_text);
+            list_complete_texts.push_back(std::move(cdt));
+
+            //Le trésor affiché
+            selectCorrespondingPlate(gamecore.getBoard().getMasterplate());
+            cd.respective_texture = std::make_unique<sf::Texture>(
+                selectCorrespondingTreasure(players[i].getTreasureList()[players[i].getTreasureIndex()]));
+            cd.sprite = std::make_unique<sf::Sprite>(sf::Sprite(*cd.respective_texture)); //0, 0, 800, 600
+            cd.sprite->setPosition(sf::Vector2f(560.f, 425.f));
+            cd.sprite->setScale(sf::Vector2f(0.25, 0.25));
+            cd.is_background = true;
+            list_complete_sprites.push_back(std::move(cd));
+        }
+
+    }
+    */
+
 }
 //Créés par soucis de clarification
 sf::Vector2i GameScreen::convert_PlaygroundPosition_To_SpritePosition(int i, int j) {
@@ -234,6 +278,7 @@ std::string GameScreen::selectCorrespondingPlate(state::Plate plate) { //Rotatio
     plate_path = plate_path +  plate.getPlateSymbolFromAcesses()+".png";
     return plate_path;
 }
+
 
 sf::Vector2i GameScreen::getInsertCoordinatesFromGrayBoxBonds(completeSprite & graybox) {
     int i = 0;
